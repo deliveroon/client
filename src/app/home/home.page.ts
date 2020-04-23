@@ -1,0 +1,93 @@
+import { Component } from '@angular/core';
+import { Article } from './article';
+import { HttpClient } from '@angular/common/http';
+import { Shop, PanierElement } from './shop';
+import { ActivatedRoute } from '@angular/router';
+import { environment } from 'src/environments/environment';
+import { Mission } from './mission';
+import { ModalController } from '@ionic/angular';
+import { ConfirmPage } from './modal/modal.page';
+import { CommandList } from './modal2/modal.page';
+
+
+@Component({
+  selector: 'app-home',
+  templateUrl: 'home.page.html',
+  styleUrls: ['home.page.scss'],
+})
+export class HomePage {
+  env: any;
+  isAuth: boolean = false;
+  token: string;
+  shop : Shop;
+  test: number = 0;
+  selectedArticles: PanierElement[] = new Array<PanierElement>();
+  constructor(public modalController: ModalController, private route: ActivatedRoute, private http: HttpClient) {
+    this.env = environment;
+
+    this.route.paramMap.subscribe(params => {
+      this.token = params.get('token');
+      this.http.get<Shop>(this.env.api_url+"/shop/" + this.token).subscribe(data=>{
+        this.isAuth = true;
+        this.shop = data;
+        for(let key in this.shop.articles){
+          var e = new PanierElement();
+          e.articleId = this.shop.articles[key].id;
+          e.quantity = 0;
+          this.selectedArticles[this.shop.articles[key].id] = e;
+        }
+      },
+      (err) => {
+        this.isAuth = false;
+      });
+    });
+    
+  }
+
+  addArticle(id: number){
+
+  var article = this.selectedArticles[id]
+
+  if(!article){
+      var element: PanierElement = new PanierElement();
+      element.articleId = id;
+      element.quantity = 1;
+      this.selectedArticles[id] = element;
+    }
+    else{
+      this.selectedArticles[id].quantity += 1;
+    }    
+
+  }
+
+  subArticle(id: number){
+
+    var article = this.selectedArticles[id]
+  
+    if(article && article.quantity > 0){
+        this.selectedArticles[id].quantity -= 1;
+    }
+
+  }
+
+  async confirm(){
+
+    const modal = await this.modalController.create({
+      component: ConfirmPage,
+      cssClass: 'my-custom-modal-css',
+      componentProps: {
+        'selectedArticles' : this.selectedArticles,
+        'token': this.token
+      },
+    });
+    await modal.present();   
+    }
+
+    async openCommand(){
+      const modal = await this.modalController.create({
+        component: CommandList,
+        cssClass: 'my-custom-modal-css'
+      });
+      await modal.present();  
+    }
+}

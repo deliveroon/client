@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-toolbar color="danger">
+    <ion-buttons slot="start" (click)="goHome()"> 
+      <ion-button>
+      <ion-icon name="arrow-back-outline"></ion-icon>
+    </ion-button> 
+    </ion-buttons>
+    <ion-buttons slot="end" (click)="refreshMap()"> 
+      <ion-button>
+      <ion-icon name="refresh-outline"></ion-icon>
+    </ion-button> 
+    </ion-buttons>   
+    <ion-title>Suivre ma commande</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+
+
+<div id="map" style= "height: 90vh;">
+
+</div>
+
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar color="primary">
+    <ion-title *ngIf="statut == 1">Recherche d'un livreur</ion-title >
+    <ion-title  *ngIf="statut == 2">Livraison en cour</ion-title >
+    <ion-title  *ngIf="statut == 3">Livraison effectué</ion-title >
+  </ion-toolbar>
+  <ion-button color= "danger" expand="full">Annuler</ion-button>
+
+</ion-footer>

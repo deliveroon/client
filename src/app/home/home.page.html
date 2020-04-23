@@ -1,0 +1,66 @@
+<ion-header >
+  <ion-toolbar color="success">
+    <ion-buttons slot="start">
+      <ion-button (click)="openCommand()">
+        <ion-icon name="list-outline"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+    <ion-title>
+      <span *ngIf="shop.country.name=='France'">Boutique</span>
+      <span *ngIf="shop.country.name=='Espagne'">Tienda</span>
+        
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <ion-list>
+    <ion-item *ngFor="let article of shop.articles">
+      <ion-card style = "width: 70vw;">
+
+        <div>
+          <ion-card-content>
+            <img src="{{article.photo}}" />
+          </ion-card-content>
+          <ion-card-header>
+            <ion-card-subtitle>{{article.description}}</ion-card-subtitle>
+            <ion-card-title>{{article.name}}</ion-card-title>
+            <ion-card-subtitle>{{article.price}} €</ion-card-subtitle>
+          </ion-card-header>
+        </div>
+        <div>
+          <ion-toolbar>
+            <ion-buttons slot="start">
+              <ion-button (click)="addArticle(article.id)">
+            
+                <ion-icon slot="icon-only" name="add-outline" ></ion-icon>
+              </ion-button>
+              <ion-button (click)="subArticle(article.id)">
+            
+                <ion-icon slot="icon-only" name="remove-outline" ></ion-icon>
+              </ion-button>
+
+              
+            </ion-buttons>
+            <ion-buttons slot="end">
+              <ion-input  disabled [value]="selectedArticles[article.id].quantity || 0" type="number"></ion-input>
+
+          </ion-buttons>
+              
+          </ion-toolbar>
+        </div>
+        
+      </ion-card>
+    </ion-item>
+  </ion-list>
+
+  
+  <ion-button color="success" (click)="confirm()" *ngIf="shop.country.name=='France'" expand="full" >VALIDER</ion-button>
+  <ion-button color="success" (click)="confirm()" *ngIf="shop.country.name=='Espagne'"  expand="full">VALIDAR</ion-button>
+
+</ion-content>
+
+
+
+

@@ -1,0 +1,22 @@
+<ion-header>
+    <ion-toolbar color="warning">
+      <ion-title>Mes commandes </ion-title>
+      <ion-buttons slot="start">
+        <ion-button (click)="dismiss()">
+            <ion-icon name="chevron-back-outline"></ion-icon>
+      </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+  
+  
+  
+  <ion-content>
+    <ion-list>
+      <ion-item *ngFor="let token of tokens">
+        <a *ngIf="token != null" href="/mycommand/{{token}}">{{token}}</a>
+      </ion-item>
+  </ion-list>
+  </ion-content>
+
+  
