@@ -3,9 +3,9 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
-  { path: 'shop/:token', loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)},
+  { path: '', loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)},
   {
-    path: 'mycommand/:token',
+    path: 'mycommand',
     loadChildren: () => import('./mycommand/mycommand.module').then( m => m.MycommandPageModule)
   },
 ];

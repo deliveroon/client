@@ -1,12 +1,12 @@
 <ion-header>
   <ion-toolbar color="danger">
-    <ion-buttons slot="start" (click)="goHome()"> 
-      <ion-button>
+    <ion-buttons slot="start" > 
+      <ion-button (click)="goHome()">
       <ion-icon name="arrow-back-outline"></ion-icon>
     </ion-button> 
     </ion-buttons>
-    <ion-buttons slot="end" (click)="refreshMap()"> 
-      <ion-button>
+    <ion-buttons slot="end" > 
+      <ion-button (click)="reload()">
       <ion-icon name="refresh-outline"></ion-icon>
     </ion-button> 
     </ion-buttons>   
@@ -16,8 +16,14 @@
 
 <ion-content [fullscreen]="true">
 
+<div  *ngIf="isAuth == false">
 
-
+    <ion-item>
+      <ion-label position="floating">Code</ion-label>
+      <ion-input [(ngModel)]="token"  ></ion-input>
+    </ion-item>
+    <ion-button color="success" expand="full" (click)="auth(token)">Valider / Validar</ion-button>
+</div>
 <div id="map" style= "height: 90vh;">
 
 </div>

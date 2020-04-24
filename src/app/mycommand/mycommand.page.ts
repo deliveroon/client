@@ -19,6 +19,8 @@ export class MycommandPage implements OnInit {
   lat: number;
   lng: number;
   statut: number;
+  token: string;
+  isAuth: boolean = false;
 
   client: any;
   livreur: any = new mapboxgl.Marker({
@@ -34,14 +36,19 @@ export class MycommandPage implements OnInit {
   }
 
   ngOnInit() {
+    
+    
+  }
+
+  auth(token: string){
+    this.token = token;
+    this.isAuth = true;
     this.buildMap();
     this.refreshData();
     setInterval(() => { 
       this.refreshData();
    }, 1000);
-    
   }
-
   buildMap(){
     navigator.geolocation.getCurrentPosition((pos)=>{
       this.lat= pos.coords.latitude;
@@ -61,8 +68,7 @@ export class MycommandPage implements OnInit {
   }
 
   getStatut(){
-    this.route.paramMap.subscribe(params => {
-      this.http.get<MissionClient>(this.env.api_url+'/mission/'+ params.get('token'))
+      this.http.get<MissionClient>(this.env.api_url+'/mission/'+ this.token)
       .subscribe( (data) => {
         this.statut = data.statut.id
       },
@@ -70,7 +76,7 @@ export class MycommandPage implements OnInit {
 
       });
       
-    });
+
   }
 
   calcCenter(lng, lat){
@@ -92,22 +98,18 @@ export class MycommandPage implements OnInit {
   }
 
   getLocation(){
-    this.route.paramMap.subscribe(params => {
-      this.http.get<Loca>(this.env.api_url+'/location/'+ params.get('token'))
+      this.http.get<Loca>(this.env.api_url+'/location/'+ this.token)
       .subscribe( (data) => {
         if(data != undefined){
           this.livreur
         .setLngLat([data.longitude, data.latitude])
-        .addTo(this.map);
-
-        
+        .addTo(this.map);       
         }
       },
       (err) => {
 
       });
       
-    });
   }
 
   refreshData(){
@@ -115,6 +117,13 @@ export class MycommandPage implements OnInit {
     if(this.statut == 2){
       this.getLocation();
     }   
+  }
+
+  goHome(){
+    window.location.href="/";
+  }
+  reload(){
+    window.location.reload();
   }
 
 }

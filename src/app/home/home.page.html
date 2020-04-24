@@ -1,8 +1,8 @@
 <ion-header >
-  <ion-toolbar color="success">
+  <ion-toolbar color="danger" *ngIf="isAuth">
     <ion-buttons slot="start">
-      <ion-button (click)="openCommand()">
-        <ion-icon name="list-outline"></ion-icon>
+      <ion-button (click)= "goCommand()">
+        <ion-icon name="navigate-outline"></ion-icon>
     </ion-button>
   </ion-buttons>
     <ion-title>
@@ -13,8 +13,18 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
 
+  
+
+<ion-content [fullscreen]="true">
+  <div>
+
+    <ion-item>
+      <ion-label position="floating">Code</ion-label>
+      <ion-input [(ngModel)]="token"></ion-input>
+    </ion-item>
+    <ion-button color="success" expand="full" (click)="auth(token)">Valider / Validar</ion-button>
+    </div>
   <ion-list>
     <ion-item *ngFor="let article of shop.articles">
       <ion-card style = "width: 70vw;">
@@ -56,8 +66,8 @@
   </ion-list>
 
   
-  <ion-button color="success" (click)="confirm()" *ngIf="shop.country.name=='France'" expand="full" >VALIDER</ion-button>
-  <ion-button color="success" (click)="confirm()" *ngIf="shop.country.name=='Espagne'"  expand="full">VALIDAR</ion-button>
+  <ion-button color="danger" (click)="confirm()" *ngIf="shop.country.name=='France'" expand="full" >VALIDER</ion-button>
+  <ion-button color="danger" (click)="confirm()" *ngIf="shop.country.name=='Espagne'"  expand="full">VALIDAR</ion-button>
 
 </ion-content>
 

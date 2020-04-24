@@ -23,10 +23,11 @@ export class HomePage {
   test: number = 0;
   selectedArticles: PanierElement[] = new Array<PanierElement>();
   constructor(public modalController: ModalController, private route: ActivatedRoute, private http: HttpClient) {
-    this.env = environment;
+    this.env = environment;  
+  }
 
-    this.route.paramMap.subscribe(params => {
-      this.token = params.get('token');
+  auth(token: string){
+    this.token = token;
       this.http.get<Shop>(this.env.api_url+"/shop/" + this.token).subscribe(data=>{
         this.isAuth = true;
         this.shop = data;
@@ -40,8 +41,6 @@ export class HomePage {
       (err) => {
         this.isAuth = false;
       });
-    });
-    
   }
 
   addArticle(id: number){
@@ -83,6 +82,9 @@ export class HomePage {
     await modal.present();   
     }
 
+    goCommand(){
+      window.location.href = "/mycommand";
+    }
     async openCommand(){
       const modal = await this.modalController.create({
         component: CommandList,
