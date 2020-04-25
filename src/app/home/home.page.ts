@@ -23,6 +23,7 @@ export class HomePage {
   token: string;
   shop : Shop;
   test: number = 0;
+  total: number = 0;
   selectedArticles: PanierElement[] = new Array<PanierElement>();
   constructor(private router: Router, private navCtrl: NavController, public modalController: ModalController, private http: HttpClient) {
     this.env = environment;  
@@ -33,6 +34,17 @@ export class HomePage {
       component: SuiviCommand
     });
     await modal.present();   
+  }
+
+  calcTotal(){
+    this.total = 0;
+    for (let key in this.selectedArticles){
+      if (this.selectedArticles[key] != undefined){
+        var index = this.shop.articles.findIndex(obj => obj.id == this.selectedArticles[key].articleId);
+        this.total += this.selectedArticles[key].quantity * this.shop.articles[index].price;
+      }
+    }
+    console.log(this.total);
   }
 
   auth(token: string){
@@ -66,7 +78,9 @@ export class HomePage {
     }
     else{
       this.selectedArticles[id].quantity += 1;
-    }    
+    }   
+    
+    this.calcTotal();
 
   }
 
@@ -77,6 +91,8 @@ export class HomePage {
     if(article && article.quantity > 0){
         this.selectedArticles[id].quantity -= 1;
     }
+
+    this.calcTotal();
 
   }
 
