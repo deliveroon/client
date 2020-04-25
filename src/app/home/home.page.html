@@ -1,7 +1,7 @@
 <ion-header >
   <ion-toolbar color="danger" *ngIf="isAuth">
     <ion-buttons slot="start">
-      <ion-button (click)= "goCommand()">
+      <ion-button [routerLink]="['/mycommand']">
         <ion-icon name="navigate-outline"></ion-icon>
     </ion-button>
   </ion-buttons>

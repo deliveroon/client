@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import * as mapboxgl from 'mapbox-gl/dist/mapbox-gl.js';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MissionClient } from './statut';
 import { Loca } from './loca';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-mycommand',
@@ -29,7 +30,7 @@ export class MycommandPage implements OnInit {
 
 
 
-  constructor(private http: HttpClient, private route: ActivatedRoute) { 
+  constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router) { 
     this.env = environment;
     mapboxgl.accessToken = 'pk.eyJ1IjoiY2hlcnlmb3UiLCJhIjoiY2s5YzB2Y2MwMDA0ejNsbWtjczNhbmMwbSJ9.2JDow1e36gCHUqY7FjaL-Q';
     
@@ -120,7 +121,7 @@ export class MycommandPage implements OnInit {
   }
 
   goHome(){
-    window.location.href="/";
+    this.router.navigate(['/']);
   }
   reload(){
     window.location.reload();

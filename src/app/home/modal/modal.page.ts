@@ -56,7 +56,7 @@ export class ConfirmPage {
 
           localStorage.setItem('tokens', localStorage.getItem('tokens') + ';' + data.token)
           alert("numero de commande: " + data.token);
-          window.location.href = "/mycommand/" ;
+          this.router.navigate(['/mycommand']);
                
         },
         (err) => {   
