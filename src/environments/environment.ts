@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  api_url: "https://192.168.0.47:50001"
+  api_url: "https://superettemobile.ddns.net"
 };
 
 /*

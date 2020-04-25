@@ -1,5 +1,7 @@
 {
   "name": "tokenShopFront",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
