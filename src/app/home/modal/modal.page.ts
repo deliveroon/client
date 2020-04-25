@@ -5,12 +5,16 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Mission } from '../mission';
 import { PanierElement } from '../shop';
+import { RouterOutlet, ActivationStart } from '@angular/router';
+
 
 @Component({
   selector: 'modal-page3',
   templateUrl: './modal.page.html',
 })
 export class ConfirmPage {
+
+  @ViewChild(RouterOutlet, null) outlet: RouterOutlet;
 
   env: any;
   selectedArticles: PanierElement[] = new Array<PanierElement>();
@@ -22,7 +26,14 @@ export class ConfirmPage {
     this.selectedArticles = navParams.get('selectedArticles');
     this.env = environment;
   }
+  
 
+  ngOnInit(): void {
+    this.router.events.subscribe(e => {
+      if (e instanceof ActivationStart && e.snapshot.outlet === "administration")
+        this.outlet.deactivate();
+    });
+  }
   change(event){
     this.nom = event.target.value;
   }
