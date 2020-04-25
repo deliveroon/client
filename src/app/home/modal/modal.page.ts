@@ -30,7 +30,7 @@ export class ConfirmPage {
 
   ngOnInit(): void {
     this.router.events.subscribe(e => {
-      if (e instanceof ActivationStart && e.snapshot.outlet === "administration")
+      if (e instanceof ActivationStart)
         this.outlet.deactivate();
     });
   }
