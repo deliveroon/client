@@ -18,6 +18,10 @@ export class ConfirmPage {
   selectedArticles: PanierElement[] = new Array<PanierElement>();
   token: string;
   nom: string = "";
+  addr: string = "";
+  codepost: string = "";
+  portable: string = "";
+
 
   constructor(private modalController: ModalController, private navCtrl: NavController,navParams: NavParams,private router: Router, private toastController: ToastController, private modalCtrl : ModalController, private http: HttpClient) {
     this.token = navParams.get('token');
@@ -28,12 +32,24 @@ export class ConfirmPage {
   change(event){
     this.nom = event.target.value;
   }
+  changeaddr(event){
+    this.addr = event.target.value;
+  }
+  changecode(event){
+    this.codepost = event.target.value;
+  }
+  changeportable(event){
+    this.portable = event.target.value;
+  }
 
   async confirm(){
     
     navigator.geolocation.getCurrentPosition((pos)=>{
       var mission = {
         name: this.nom,
+        numero: this.portable,
+        adresse: this.addr,
+        postale: this.codepost,
         gps: "ll="+pos.coords.longitude+"%2C"+pos.coords.latitude ,
         statut : 1,
       }

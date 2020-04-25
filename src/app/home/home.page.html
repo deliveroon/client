@@ -71,6 +71,9 @@
 	<ion-item *ngIf="shop.country.name=='France'">
 		Total : {{ total }} € 
 	</ion-item>
+
+
+
   </ion-list>
   
   <ion-button color="danger" (click)="confirm()" *ngIf="shop.country.name=='France'" expand="full" >COMMANDER</ion-button>

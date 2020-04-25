@@ -37,6 +37,17 @@ export class HomePage {
     await modal.present();   
   }
 
+  calcTotal(){
+    this.total = 0;
+    for (let key in this.selectedArticles){
+      if (this.selectedArticles[key] != undefined){
+        var index = this.shop.articles.findIndex(obj => obj.id == this.selectedArticles[key].articleId);
+        this.total += this.selectedArticles[key].quantity * this.shop.articles[index].price;
+      }
+    }
+    console.log(this.total);
+  }
+
   auth(token: string){
     this.shop = new Shop();
     this.shop.country = new Country();
@@ -79,9 +90,16 @@ export class HomePage {
     }
     else{
       this.selectedArticles[id].quantity += 1;
+
     }    
     this.calcTotal();
-  }
+
+    }   
+    
+
+
+
+
 
   subArticle(id: number){
 
@@ -90,7 +108,13 @@ export class HomePage {
     if(article && article.quantity > 0){
         this.selectedArticles[id].quantity -= 1;
     }
+
     this.calcTotal();
+
+
+
+
+
   }
 
   async confirm(){

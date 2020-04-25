@@ -17,6 +17,21 @@
         <ion-label position="floating">Nom</ion-label>
         <ion-input (ionInput)="change($event)" [(ngModel)]="nom"></ion-input>
       </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Adresse</ion-label>
+        <ion-input (ionInput)="changeaddr($event)" [(ngModel)]="addr"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Code postal</ion-label>
+        <ion-input (ionInput)="changecode($event)" [(ngModel)]="codepost"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Portable</ion-label>
+        <ion-input (ionInput)="changeportable($event)" [(ngModel)]="portable"></ion-input>
+      </ion-item>
   </ion-list>
   </ion-content>
 
