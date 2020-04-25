@@ -5,7 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Mission } from '../mission';
 import { PanierElement } from '../shop';
-import { RouterOutlet, ActivationStart } from '@angular/router';
+import { SuiviCommand } from '../modal3/modal.page';
 
 
 @Component({
@@ -14,31 +14,22 @@ import { RouterOutlet, ActivationStart } from '@angular/router';
 })
 export class ConfirmPage {
 
-  @ViewChild(RouterOutlet, null) outlet: RouterOutlet;
-
   env: any;
   selectedArticles: PanierElement[] = new Array<PanierElement>();
   token: string;
   nom: string = "";
 
-  constructor( private navCtrl: NavController,navParams: NavParams,private router: Router, private toastController: ToastController, private modalCtrl : ModalController, private http: HttpClient) {
+  constructor(private modalController: ModalController, private navCtrl: NavController,navParams: NavParams,private router: Router, private toastController: ToastController, private modalCtrl : ModalController, private http: HttpClient) {
     this.token = navParams.get('token');
     this.selectedArticles = navParams.get('selectedArticles');
     this.env = environment;
   }
-  
 
-  ngOnInit(): void {
-    this.router.events.subscribe(e => {
-      if (e instanceof ActivationStart)
-        this.outlet.deactivate();
-    });
-  }
   change(event){
     this.nom = event.target.value;
   }
 
-  confirm(){
+  async confirm(){
     
     navigator.geolocation.getCurrentPosition((pos)=>{
       var mission = {
@@ -46,7 +37,7 @@ export class ConfirmPage {
         gps: "ll="+pos.coords.longitude+"%2C"+pos.coords.latitude ,
         statut : 1,
       }
-      this.http.post<Mission>(this.env.api_url+"/mission/"+this.token, mission).subscribe((data) => {
+      this.http.post<Mission>(this.env.api_url+"/mission/"+this.token, mission).subscribe(async (data) => {
         console.log(data)  
         for(let key in this.selectedArticles){
             var body= {
@@ -66,8 +57,15 @@ export class ConfirmPage {
           }
 
           localStorage.setItem('tokens', localStorage.getItem('tokens') + ';' + data.token)
-          alert("numero de commande: " + data.token);
-          this.router.navigate(['/mycommand']);
+
+          alert("Votre commande a été prise en compte voici votre numero de commande à enregistrer : " + data.token)
+          const modal = await this.modalController.create({
+            component: SuiviCommand,
+            componentProps: {
+              'token': data.token
+            },
+          });
+          await modal.present();   
                
         },
         (err) => {   

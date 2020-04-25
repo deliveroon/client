@@ -1,7 +1,7 @@
 <ion-header >
   <ion-toolbar color="danger" *ngIf="isAuth">
     <ion-buttons slot="start">
-      <ion-button [routerLink]="['/mycommand']">
+      <ion-button (click)="goCommand()">
         <ion-icon name="navigate-outline"></ion-icon>
     </ion-button>
   </ion-buttons>
@@ -20,10 +20,10 @@
   <div>
 
     <ion-item>
-      <ion-label position="floating">Code</ion-label>
+      <ion-label position="floating">Code boutique</ion-label>
       <ion-input [(ngModel)]="token"></ion-input>
     </ion-item>
-    <ion-button color="success" expand="full" (click)="auth(token)">Valider / Validar</ion-button>
+    <ion-button color="success" expand="full" (click)="auth(token)">Ouvrir</ion-button>
     </div>
   <ion-list>
     <ion-item *ngFor="let article of shop.articles">
@@ -66,7 +66,7 @@
   </ion-list>
 
   
-  <ion-button color="danger" (click)="confirm()" *ngIf="shop.country.name=='France'" expand="full" >VALIDER</ion-button>
+  <ion-button color="danger" (click)="confirm()" *ngIf="shop.country.name=='France'" expand="full" >COMMANDER</ion-button>
   <ion-button color="danger" (click)="confirm()" *ngIf="shop.country.name=='Espagne'"  expand="full">VALIDAR</ion-button>
 
 </ion-content>

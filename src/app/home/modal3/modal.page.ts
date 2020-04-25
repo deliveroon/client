@@ -1,18 +1,19 @@
-import { Component, OnInit } from '@angular/core';
-import * as mapboxgl from 'mapbox-gl/dist/mapbox-gl.js';
-import { HttpClient } from '@angular/common/http';
+import { Component, Input, ElementRef, ViewChild } from '@angular/core';
+import { NavParams, ModalController, ToastController, NavController} from '@ionic/angular';
 import { environment } from 'src/environments/environment';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { MissionClient } from './statut';
-import { Loca } from './loca';
-import { NavController } from '@ionic/angular';
+import { Mission } from '../mission';
+import { PanierElement } from '../shop';
+import { Loca } from 'src/app/mycommand/loca';
+import * as mapboxgl from 'mapbox-gl/dist/mapbox-gl.js';
+import { MissionClient } from 'src/app/mycommand/statut';
 
 @Component({
-  selector: 'app-mycommand',
-  templateUrl: './mycommand.page.html',
-  styleUrls: ['./mycommand.page.scss'],
+  selector: 'modal-page3',
+  templateUrl: './modal.page.html',
 })
-export class MycommandPage implements OnInit {
+export class SuiviCommand {
 
   env: any;
   map: mapboxgl.Map;
@@ -29,11 +30,13 @@ export class MycommandPage implements OnInit {
   });
 
 
-
-  constructor(private http: HttpClient, private router: Router) { 
+  constructor(navParams: NavParams, private modalCtrl: ModalController, private http: HttpClient, private router: Router) { 
     this.env = environment;
     mapboxgl.accessToken = 'pk.eyJ1IjoiY2hlcnlmb3UiLCJhIjoiY2s5YzB2Y2MwMDA0ejNsbWtjczNhbmMwbSJ9.2JDow1e36gCHUqY7FjaL-Q';
-    
+    if(navParams.get('token') != undefined){
+      this.token = navParams.get('token');
+      this.auth();
+    }
   }
 
   ngOnInit() {
@@ -41,8 +44,11 @@ export class MycommandPage implements OnInit {
     
   }
 
-  auth(token: string){
-    this.token = token;
+  change(event){
+    this.token = event.target.value;
+  }
+
+  auth(){
     this.isAuth = true;
     this.buildMap();
     this.refreshData();
@@ -125,6 +131,14 @@ export class MycommandPage implements OnInit {
   }
   reload(){
     window.location.reload();
+  }
+
+  dismiss() {
+    // using the injected ModalController this page
+    // can "dismiss" itself and optionally pass back data
+    this.modalCtrl.dismiss({
+      'dismissed': true
+    });
   }
 
 }

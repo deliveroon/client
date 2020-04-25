@@ -11,13 +11,16 @@ import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http'
 import { ConfirmPage } from './home/modal/modal.page';
 import { CommandList } from './home/modal2/modal.page';
+import { SuiviCommand } from './home/modal3/modal.page';
+
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 
 
 @NgModule({
-  declarations: [AppComponent, ConfirmPage, CommandList],
-  entryComponents: [ConfirmPage, CommandList],
-  imports: [HttpClientModule, BrowserModule, IonicModule.forRoot(), AppRoutingModule],
+  declarations: [AppComponent, ConfirmPage, CommandList, SuiviCommand],
+  entryComponents: [ConfirmPage, CommandList, SuiviCommand],
+  imports: [HttpClientModule, BrowserModule, IonicModule.forRoot(
+  ), AppRoutingModule],
   providers: [
     StatusBar,
     SplashScreen,

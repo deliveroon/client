@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-toolbar color="danger">
+    <ion-buttons slot="start" > 
+      <ion-button (click)="dismiss()">
+      <ion-icon name="arrow-back-outline"></ion-icon>
+    </ion-button> 
+    </ion-buttons>
+  
+    <ion-title>Suivre ma commande</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+<div  *ngIf="isAuth == false">
+
+    <ion-item>
+      <ion-label position="floating">Numero de commande</ion-label>
+      <ion-input (ionChange)="change($event)" ></ion-input>
+    </ion-item>
+    <ion-button color="success" expand="full" (click)="auth()">Suivre</ion-button>
+</div>
+<div id="map" style= "height: 90vh;">
+
+</div>
+
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar color="primary">
+    <ion-title *ngIf="statut == 1">Recherche d'un livreur</ion-title >
+    <ion-title  *ngIf="statut == 2">Livraison en cour</ion-title >
+    <ion-title  *ngIf="statut == 3">Livraison effectué</ion-title >
+  </ion-toolbar>
+  <ion-button color= "danger" expand="full">Annuler</ion-button>
+
+</ion-footer>

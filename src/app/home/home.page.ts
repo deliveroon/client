@@ -2,12 +2,14 @@ import { Component } from '@angular/core';
 import { Article } from './article';
 import { HttpClient } from '@angular/common/http';
 import { Shop, PanierElement } from './shop';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { Mission } from './mission';
-import { ModalController } from '@ionic/angular';
+import { ModalController, NavController } from '@ionic/angular';
 import { ConfirmPage } from './modal/modal.page';
 import { CommandList } from './modal2/modal.page';
+import { SuiviCommand } from './modal3/modal.page';
+import { Country } from './country';
 
 
 @Component({
@@ -22,11 +24,20 @@ export class HomePage {
   shop : Shop;
   test: number = 0;
   selectedArticles: PanierElement[] = new Array<PanierElement>();
-  constructor(public modalController: ModalController, private route: ActivatedRoute, private http: HttpClient) {
+  constructor(private router: Router, private navCtrl: NavController, public modalController: ModalController, private http: HttpClient) {
     this.env = environment;  
   }
 
+  async goCommand(){
+    const modal = await this.modalController.create({
+      component: SuiviCommand
+    });
+    await modal.present();   
+  }
+
   auth(token: string){
+    this.shop = new Shop();
+    this.shop.country = new Country();
     this.token = token;
       this.http.get<Shop>(this.env.api_url+"/shop/" + this.token).subscribe(data=>{
         this.isAuth = true;
@@ -82,9 +93,6 @@ export class HomePage {
     await modal.present();   
     }
 
-    goCommand(){
-      window.location.href = "/mycommand";
-    }
     async openCommand(){
       const modal = await this.modalController.create({
         component: CommandList,
